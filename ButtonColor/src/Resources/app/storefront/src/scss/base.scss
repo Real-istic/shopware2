@@ -1,3 +1,7 @@
-.confim-color {
-    --bs-btn-bg: green;
+.confirm-color {
+    --bs-btn-bg: teal;
+
+    &:hover {
+        background-color: teal!important;
+    }
 }

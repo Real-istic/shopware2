@@ -4,7 +4,9 @@ import HttpClient from 'src/service/http-client.service'
 
 export default class ButtonColor extends AddToCart {
     init() {
+        this.PluginManager = window.PluginManager
         this._cartEl = DomAccess.querySelector(document, '[data-add-to-cart]')
+        this._cartEL2 = DomAccess.querySelector(document, '.header-cart')
         this._client = new HttpClient(window.accessKey, window.contextToken)
         super.init()
     }
@@ -14,22 +16,26 @@ export default class ButtonColor extends AddToCart {
     }
 
     _afterAddItemToCart() {
-        this._changeButtonText()
-
-        this._changeColor()
+        this._refreshCartValue()
+        this._changeButtonAppearance()
     }
 
-    _changeButtonText() {
-        const cartWidgetEl = DomAccess.querySelector(this._cartEl, '.btn-buy')
-        // console.info(cartWidgetEl)
-    }
+    _changeButtonAppearance() {
+        const cartWidgetEl = DomAccess.querySelector(this._cartEl, '.btn-primary')
+        cartWidgetEl.classList.add('confirm-color')
+        cartWidgetEl.innerText = 'Wird in den Warenkorb gelegt'
 
-    _changeColor() {
-        const cartWidgetEl = DomAccess.querySelector(this._cartEl, '.btn-buy')
-        // this._cartEl.classList.add('confim-color')
-        cartWidgetEl.classList.add('confim-color')
         setTimeout(() => {
-            cartWidgetEl.classList.remove('confim-color')
+            cartWidgetEl.classList.remove('confirm-color')
+            cartWidgetEl.innerText = 'In den Warenkorb'
         }, 1000);
     }
+
+    _refreshCartValue() {
+        const cartWidgetEl = DomAccess.querySelector(this._cartEL2, '[data-cart-widget]')
+        const cartWidgetInstance = this.PluginManager.getPluginInstanceFromElement(cartWidgetEl, 'CartWidget')
+        cartWidgetInstance.fetch()
+    }
+
+
 }
