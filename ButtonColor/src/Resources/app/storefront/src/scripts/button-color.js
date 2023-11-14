@@ -9,26 +9,13 @@ export default class ButtonColor extends AddToCart {
         this._cartEL2 = DomAccess.querySelector(document, '.header-cart')
         this._client = new HttpClient(window.accessKey, window.contextToken)
         super.init()
-    }
 
-    _openOffCanvasCart(instance, requestUrl, formData) {
-        this._client.post(requestUrl, formData, this._afterAddItemToCart.bind(this))
-    }
-
-    _afterAddItemToCart() {
-        this._refreshCartValue()
-        this._changeButtonAppearance()
-    }
-
-    _changeButtonAppearance() {
-        const cartWidgetEl = DomAccess.querySelector(this._cartEl, '.btn-primary')
-        cartWidgetEl.classList.add('confirm-color')
-        cartWidgetEl.innerText = 'Wird in den Warenkorb gelegt'
-
-        setTimeout(() => {
-            cartWidgetEl.classList.remove('confirm-color')
-            cartWidgetEl.innerText = 'In den Warenkorb'
-        }, 1000);
+        Array.from(document.querySelectorAll('.btn-buy')).forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                this._buttonClicked(event.target);
+            });
+        });
     }
 
     _refreshCartValue() {
@@ -37,5 +24,28 @@ export default class ButtonColor extends AddToCart {
         cartWidgetInstance.fetch()
     }
 
-
+    _buttonClicked(button) {
+        this._openOffCanvasCart(button);
+    }
+    
+    _openOffCanvasCart(button) {
+        const requestUrl = button.form.action;
+        const formData = new FormData(button.form);
+        this._client.post(requestUrl, formData, this._afterAddItemToCart.bind(this, button))
+    }
+    
+    _afterAddItemToCart(button) {
+        this._refreshCartValue()
+        this._changeButtonAppearance(button)
+    }
+    
+    _changeButtonAppearance(button) {
+        button.classList.add('confirm-color')
+        button.innerText = 'Wird in den Warenkorb gelegt'
+    
+        setTimeout(() => {
+            button.classList.remove('confirm-color')
+            button.innerText = 'In den Warenkorb'
+        }, 1000)
+    }
 }
