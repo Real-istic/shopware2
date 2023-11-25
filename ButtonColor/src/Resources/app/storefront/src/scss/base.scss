@@ -1,7 +1,9 @@
+@import 'abstract/variables.scss';
+
 .confirm-color {
-    --bs-btn-bg: teal;
+    background-color: $confirmed-button!important;
 
     &:hover {
-        background-color: teal!important;
+        background-color: $confirmed-button!important;
     }
 }

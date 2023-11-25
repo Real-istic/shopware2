@@ -2,9 +2,9 @@
   "name": "ButtonColor",
   "author": "Shopware AG",
   "views": [
-     "@Storefront",
-     "@Plugins",
-     "@ButtonColor"
+    "@Storefront",
+    "@Plugins",
+    "@ButtonColor"
   ],
   "style": [
     "app/storefront/src/scss/overrides.scss",
@@ -18,5 +18,32 @@
   "asset": [
     "@Storefront",
     "app/storefront/src/assets"
-  ]
+  ],
+  "config": {
+    "sections": {
+      "newVariables": {
+        "label": {
+          "en-GB": "new Button color",
+          "de-DE": "neue Button Farbe"
+        }
+      }
+    },
+    "fields": {
+      "confirmed-button": {
+        "label": {
+          "en-GB": "Add to cart confirmed button color",
+          "de-DE": "In den Warenkorb bestätigt Button-Farbe"
+        },
+        "type": "color",
+        "editable": true,
+        "block": "themeColors",
+        "section": "newVariables",
+        "helpText": {
+          "en-GB": "Choose a color for the secondary buy button text",
+          "de-DE": "Wählen Sie eine Farbe für den Text der sekundären Kaufen-Schaltfläche"
+        },
+        "value": "#008080"
+      }
+    }
+  }
 }
